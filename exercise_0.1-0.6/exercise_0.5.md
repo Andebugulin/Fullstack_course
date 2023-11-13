@@ -13,6 +13,3 @@ participant Server
 
     Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     Server-->>Browser: Process the JSON data (200 OK)
-
-    Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-    Server-->> Browser: Process request, create new note (201 OK)

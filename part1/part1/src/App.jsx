@@ -9,6 +9,16 @@ const Header = (props) => {
   );
 };
 
+const Part = (props) => {
+  return (
+    <div>
+      <p>
+        {props.part_name} {props.exercise}
+      </p>
+    </div>
+  );
+};
+
 const Content = (props) => {
   // content parts : list[] of {'part<number>' : str(), 'exercises<number>' : int()} elements
   const content_parts = props.content_parts;
@@ -19,15 +29,18 @@ const Content = (props) => {
 
   return (
     <div>
-      <p>
-        {content_of_part1.part1} {content_of_part1.exercises1}
-      </p>
-      <p>
-        {content_of_part2.part2} {content_of_part2.exercises2}
-      </p>
-      <p>
-        {content_of_part3.part3} {content_of_part3.exercises3}
-      </p>
+      <Part
+        part_name={content_of_part1.part_name}
+        exercise={content_of_part1.exercise}
+      />
+      <Part
+        part_name={content_of_part2.part_name}
+        exercise={content_of_part2.exercise}
+      />
+      <Part
+        part_name={content_of_part3.part_name}
+        exercise={content_of_part3.exercise}
+      />
     </div>
   );
 };
@@ -40,9 +53,9 @@ const Total = (props) => {
   const content_of_part2 = content_parts[1];
   const content_of_part3 = content_parts[2];
 
-  const exercises1 = content_of_part1.exercises1;
-  const exercises2 = content_of_part2.exercises2;
-  const exercises3 = content_of_part3.exercises3;
+  const exercises1 = content_of_part1.exercises;
+  const exercises2 = content_of_part2.exercises;
+  const exercises3 = content_of_part3.exercises;
 
   return (
     <div>
@@ -55,16 +68,16 @@ const App = () => {
   const course = "Half Stack application development";
   const content_parts = [
     {
-      part1: "Fundamentals of React",
-      exercises1: 10,
+      part_name: "Fundamentals of React",
+      exercise: 10,
     },
     {
-      part2: "Using props to pass data",
-      exercises2: 7,
+      part_name: "Using props to pass data",
+      exercise: 7,
     },
     {
-      part3: "State of a component",
-      exercises3: 14,
+      part_name: "State of a component",
+      exercise: 14,
     },
   ];
 

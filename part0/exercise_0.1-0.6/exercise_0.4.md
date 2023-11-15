@@ -1,29 +1,29 @@
 sequenceDiagram
 participant User
 participant Browser
-participant Server
+participant server
 
-    User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/new_note\nRequest Method: POST
-    Browser->>Server: Send POST request to /new_note
-    Server-->>Browser: Respond with Status Code: 302 Found\nLocation: /exampleapp/notes
-    Browser-->>User: Receive Response with Status Code: 302 Found\nRedirect to /exampleapp/notes
+    User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/new_note\nRequest Method: POsT
+    Browser->>server: send POsT request to /new_note
+    server-->>Browser: Respond with status Code: 302 Found\nLocation: /exampleapp/notes
+    Browser-->>User: Receive Response with status Code: 302 Found\nRedirect to /exampleapp/notes
 
     User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/notes\nRequest Method: GET
-    Browser->>Server: Send GET request to /notes
-    Server-->>Browser: Respond with Status Code: 200 OK
-    Browser-->>User: Receive Response with Status Code: 200 OK\nDisplay the content of the notes page
+    Browser->>server: send GET request to /notes
+    server-->>Browser: Respond with status Code: 200 OK
+    Browser-->>User: Receive Response with status Code: 200 OK\nDisplay the content of the notes page
 
     User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/main.css\nRequest Method: GET
-    Browser->>Server: Send GET request to /main.css
-    Server-->>Browser: Respond with Status Code: 200 OK
-    Browser-->>User: Receive Response with Status Code: 200 OK\nApply the styles from the CSS file
+    Browser->>server: send GET request to /main.css
+    server-->>Browser: Respond with status Code: 200 OK
+    Browser-->>User: Receive Response with status Code: 200 OK\nApply the styles from the Css file
 
     User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/main.js\nRequest Method: GET
-    Browser->>Server: Send GET request to /main.js
-    Server-->>Browser: Respond with Status Code: 200 OK
-    Browser-->>User: Receive Response with Status Code: 200 OK\nExecute the JavaScript from the JS file
+    Browser->>server: send GET request to /main.js
+    server-->>Browser: Respond with status Code: 200 OK
+    Browser-->>User: Receive Response with status Code: 200 OK\nExecute the Javascript from the Js file
 
     User->>Browser: Request URL: https://studies.cs.helsinki.fi/exampleapp/data.json\nRequest Method: GET
-    Browser->>Server: Send GET request to /data.json
-    Server-->>Browser: Respond with Status Code: 200 OK
-    Browser-->>User: Receive Response with Status Code: 200 OK\nProcess the JSON data
+    Browser->>server: send GET request to /data.json
+    server-->>Browser: Respond with status Code: 200 OK
+    Browser-->>User: Receive Response with status Code: 200 OK\nProcess the JsON data

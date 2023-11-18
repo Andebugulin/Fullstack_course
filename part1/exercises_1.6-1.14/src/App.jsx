@@ -14,9 +14,11 @@ const Button = ({ handleClick, text }) => (
 
 const StatisticLine = ({ text, statisticData }) => (
   <div>
-    <p>
-      {text} {statisticData}
-    </p>
+    <tbody>
+      <tr>
+        {text} {statisticData}
+      </tr>
+    </tbody>
   </div>
 );
 
@@ -33,9 +35,11 @@ const DisplayTotal = ({ text, currentArray }) => {
   const totalCount = currentArray.length;
   return (
     <div>
-      <p>
-        {text} {totalCount}
-      </p>
+      <tbody>
+        <tr>
+          {text} {totalCount}
+        </tr>
+      </tbody>
     </div>
   );
 };
@@ -62,9 +66,11 @@ const DisplayAverage = ({ text, currentArray }) => {
   }
   return (
     <div>
-      <p>
-        {text} {average}
-      </p>
+      <tbody>
+        <tr>
+          {text} {average}
+        </tr>
+      </tbody>
     </div>
   );
 };
@@ -89,9 +95,11 @@ const DisplayPositiveStats = ({ text, currentArray }) => {
   }
   return (
     <div>
-      <p>
-        {text} {positive} %
-      </p>
+      <tbody>
+        <tr>
+          {text} {positive} %
+        </tr>
+      </tbody>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const Button = ({ handleClick, text }) => (
   </div>
 );
 
-const StatisticsDisplay = ({ text, statisticData }) => (
+const StatisticLine = ({ text, statisticData }) => (
   <div>
     <p>
       {text} {statisticData}
@@ -113,9 +113,9 @@ const Statistics = ({
   if (statisticArray.length !== 0) {
     return (
       <div>
-        <StatisticsDisplay text={"Good"} statisticData={goodCounter} />
-        <StatisticsDisplay text={"Neutral"} statisticData={neutralCounter} />
-        <StatisticsDisplay text={"Bad"} statisticData={badCounter} />
+        <StatisticLine text={"Good"} statisticData={goodCounter} />
+        <StatisticLine text={"Neutral"} statisticData={neutralCounter} />
+        <StatisticLine text={"Bad"} statisticData={badCounter} />
         <DisplayTotal text={"all"} currentArray={statisticArray} />
         <DisplayAverage text={"average"} currentArray={statisticArray} />
         <DisplayPositiveStats text={"positive"} currentArray={statisticArray} />

@@ -20,6 +20,82 @@ const StatisticsDisplay = ({ text, statisticData }) => (
   </div>
 );
 
+/**
+ * @param {Object} props - The props object
+ * @param {Array} props.currentArray - The current array
+ * @param {string} props.text - The text string
+ */
+const DisplayTotal = ({ text, currentArray }) => {
+  console.log(
+    "total counter is to be displayed \n this is current array:",
+    currentArray
+  );
+  const totalCount = currentArray.length;
+  return (
+    <div>
+      <p>
+        {text} {totalCount}
+      </p>
+    </div>
+  );
+};
+
+/**
+ * @param {Object} props - The props object
+ * @param {Array} props.currentArray - The current array
+ * @param {string} props.text - The text string
+ */
+const DisplayAverage = ({ text, currentArray }) => {
+  console.log(
+    "average is calculated to be displayed \n this is current array:",
+    currentArray
+  );
+
+  const sum = currentArray.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  const totalCount = currentArray.length;
+  let average = 0;
+  if (totalCount !== 0) {
+    average = sum / totalCount;
+  }
+  return (
+    <div>
+      <p>
+        {text} {average}
+      </p>
+    </div>
+  );
+};
+
+/**
+ * @param {Object} props - The props object
+ * @param {Array} props.currentArray - The current array
+ * @param {string} props.text - The text string
+ */
+const DisplayPositiveStats = ({ text, currentArray }) => {
+  console.log(
+    "positive stats is calculated to be displayed \n this is current array:",
+    currentArray
+  );
+  const sumOfPositives = currentArray
+    .filter((element) => element > 0)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const totalCount = currentArray.length;
+  let positive = 0;
+  if (totalCount !== 0) {
+    positive = (sumOfPositives / totalCount) * 100;
+  }
+  return (
+    <div>
+      <p>
+        {text} {positive} %
+      </p>
+    </div>
+  );
+};
+
 const App = () => {
   const headerText = "Provide Feedback";
   const statisticsText = "Statistics";
@@ -28,17 +104,23 @@ const App = () => {
   const [neutralCounter, setNeutralCounter] = useState(0);
   const [badCounter, setBadCounter] = useState(0);
 
+  const [feedbackArray, setFeeadbackArray] = useState([]);
+
   const setGoodCounterToValue = (newValue) => () => {
     console.log("good counter value changed to ", newValue);
     setGoodCounter(newValue);
+    setFeeadbackArray([...feedbackArray, 1]);
   };
+
   const setNeutralCounterToValue = (newValue) => () => {
     console.log("neutral counter value changed to ", newValue);
     setNeutralCounter(newValue);
+    setFeeadbackArray([...feedbackArray, 0]);
   };
   const setBadCounterToValue = (newValue) => () => {
     console.log("bad counter value changed to ", newValue);
     setBadCounter(newValue);
+    setFeeadbackArray([...feedbackArray, -1]);
   };
 
   return (
@@ -57,6 +139,9 @@ const App = () => {
       <StatisticsDisplay text={"Good"} statisticData={goodCounter} />
       <StatisticsDisplay text={"Neutral"} statisticData={neutralCounter} />
       <StatisticsDisplay text={"Bad"} statisticData={badCounter} />
+      <DisplayTotal text={"all"} currentArray={feedbackArray} />
+      <DisplayAverage text={"average"} currentArray={feedbackArray} />
+      <DisplayPositiveStats text={"positive"} currentArray={feedbackArray} />
     </div>
   );
 };

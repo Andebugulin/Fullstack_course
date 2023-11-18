@@ -30,6 +30,29 @@ const RandomAnecdote = ({ selected, maxNumber, changeCurrentNumber }) => {
   );
 };
 
+const VoteForAnecdote = ({ selected, voteObject, changeVoteObject }) => {
+  const addVote = () => {
+    changeVoteObject(() => {
+      const newVote = { ...voteObject };
+      console.log(
+        "vote changed",
+        "id",
+        selected,
+        "new vote count",
+        newVote[selected] + 1
+      );
+      newVote[selected] = newVote[selected] + 1;
+      return newVote;
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={addVote}>vote</button>
+    </div>
+  );
+};
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -43,10 +66,22 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-
+  const [voteObject, setVoteObject] = useState(() => {
+    const initialVote = {};
+    for (let i = 0; i < anecdotes.length; i++) {
+      initialVote[i] = 0;
+    }
+    return initialVote;
+  });
   return (
     <div>
-      {anecdotes[selected]}
+      {anecdotes[selected]} <br />
+      {voteObject[selected]} votes <br />
+      <VoteForAnecdote
+        selected={selected}
+        voteObject={voteObject}
+        changeVoteObject={setVoteObject}
+      />
       <RandomAnecdote
         selected={selected}
         maxNumber={anecdotes.length - 1}

@@ -96,6 +96,35 @@ const DisplayPositiveStats = ({ text, currentArray }) => {
   );
 };
 
+/**
+ * @param {Object} props - The props object
+ * @param {Array} props.statisticArray - The current stat_array
+ * @param {int} props.goodCounter - The good counter
+ * @param {int} props.neutralCounter - The neutral counter
+ * @param {int} props.badCounter - The bad counter
+ */
+const Statistics = ({
+  statisticArray,
+  goodCounter,
+  neutralCounter,
+  badCounter,
+}) => {
+  if (statisticArray.length !== 0) {
+    return (
+      <div>
+        <StatisticsDisplay text={"Good"} statisticData={goodCounter} />
+        <StatisticsDisplay text={"Neutral"} statisticData={neutralCounter} />
+        <StatisticsDisplay text={"Bad"} statisticData={badCounter} />
+        <DisplayTotal text={"all"} currentArray={statisticArray} />
+        <DisplayAverage text={"average"} currentArray={statisticArray} />
+        <DisplayPositiveStats text={"positive"} currentArray={statisticArray} />
+      </div>
+    );
+  } else {
+    return <div>No feedback was given.</div>;
+  }
+};
+
 const App = () => {
   const headerText = "Provide Feedback";
   const statisticsText = "Statistics";
@@ -104,23 +133,22 @@ const App = () => {
   const [neutralCounter, setNeutralCounter] = useState(0);
   const [badCounter, setBadCounter] = useState(0);
 
-  const [feedbackArray, setFeeadbackArray] = useState([]);
+  const [statisticsArray, setFeeadbackArray] = useState([]);
 
   const setGoodCounterToValue = (newValue) => () => {
     console.log("good counter value changed to ", newValue);
     setGoodCounter(newValue);
-    setFeeadbackArray([...feedbackArray, 1]);
+    setFeeadbackArray([...statisticsArray, 1]);
   };
-
   const setNeutralCounterToValue = (newValue) => () => {
     console.log("neutral counter value changed to ", newValue);
     setNeutralCounter(newValue);
-    setFeeadbackArray([...feedbackArray, 0]);
+    setFeeadbackArray([...statisticsArray, 0]);
   };
   const setBadCounterToValue = (newValue) => () => {
     console.log("bad counter value changed to ", newValue);
     setBadCounter(newValue);
-    setFeeadbackArray([...feedbackArray, -1]);
+    setFeeadbackArray([...statisticsArray, -1]);
   };
 
   return (
@@ -136,12 +164,12 @@ const App = () => {
       />
       <Button handleClick={setBadCounterToValue(badCounter + 1)} text="Bad" />
       <Header text={statisticsText} />
-      <StatisticsDisplay text={"Good"} statisticData={goodCounter} />
-      <StatisticsDisplay text={"Neutral"} statisticData={neutralCounter} />
-      <StatisticsDisplay text={"Bad"} statisticData={badCounter} />
-      <DisplayTotal text={"all"} currentArray={feedbackArray} />
-      <DisplayAverage text={"average"} currentArray={feedbackArray} />
-      <DisplayPositiveStats text={"positive"} currentArray={feedbackArray} />
+      <Statistics
+        statisticArray={statisticsArray}
+        goodCounter={goodCounter}
+        neutralCounter={neutralCounter}
+        badCounter={badCounter}
+      />
     </div>
   );
 };

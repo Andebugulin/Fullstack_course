@@ -109,6 +109,7 @@ const Statistics = ({
   neutralCounter,
   badCounter,
 }) => {
+  // whether the array is empty or not
   if (statisticArray.length !== 0) {
     return (
       <div>

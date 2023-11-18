@@ -1,5 +1,33 @@
 import { useState } from "react";
 
+const Header = ({ text }) => (
+  <div>
+    <h1>{text}</h1>
+  </div>
+);
+
+const AnecdoteWithMostVotes = ({ anecdotes, voteObject }) => {
+  let maxVotes = 0;
+  let maxVotesId = 0;
+  for (let i = 0; i < anecdotes.length; i++) {
+    if (voteObject[i] > maxVotes) {
+      maxVotes = voteObject[i];
+      maxVotesId = i;
+    }
+  }
+  console.log(
+    "AnecdoteWithMostVotes, current max votes:",
+    maxVotes,
+    "current votes",
+    voteObject
+  );
+  return (
+    <div>
+      {anecdotes[maxVotesId]} <br /> {maxVotes} votes
+    </div>
+  );
+};
+
 /**
  * @param {Object} props - The props object
  * @param {int} props.selected - The current array
@@ -35,7 +63,7 @@ const VoteForAnecdote = ({ selected, voteObject, changeVoteObject }) => {
     changeVoteObject(() => {
       const newVote = { ...voteObject };
       console.log(
-        "vote changed",
+        "vote changed\n",
         "id",
         selected,
         "new vote count",
@@ -75,6 +103,7 @@ const App = () => {
   });
   return (
     <div>
+      <Header text={"Anecdote of the day"} />
       {anecdotes[selected]} <br />
       {voteObject[selected]} votes <br />
       <VoteForAnecdote
@@ -87,6 +116,8 @@ const App = () => {
         maxNumber={anecdotes.length - 1}
         changeCurrentNumber={setSelected}
       />
+      <Header text={"Anecdote with most votes"} />
+      <AnecdoteWithMostVotes voteObject={voteObject} anecdotes={anecdotes} />
     </div>
   );
 };

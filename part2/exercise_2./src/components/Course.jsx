@@ -8,7 +8,7 @@ const Header = ({ headerText }) => {
 };
 
 const Part = ({ partInfo }) => {
-  console.log("displaying part", partInfo);
+  console.log("displaying part", partInfo, "\npartID", partInfo.id);
   return (
     <li>
       {partInfo.name} {partInfo.exercises}
@@ -62,7 +62,7 @@ const Courses = ({ courses }) => {
         const headerText = currentCourseData.name;
         const courseData = currentCourseData.parts;
         const courseId = currentCourseData.id;
-        console.log("Course is being rendered");
+        console.log("Course is being rendered, \ncourseID is ", courseId);
         return (
           <Course
             key={courseId}

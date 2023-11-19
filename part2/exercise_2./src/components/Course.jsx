@@ -7,27 +7,50 @@ const Header = ({ headerText }) => {
   );
 };
 
-const Content = ({ courseInfo }) => {
-  console.log("displaying content", courseInfo);
+const Part = ({ partInfo }) => {
+  console.log("displaying part", partInfo);
   return (
     <li>
-      {courseInfo.name} {courseInfo.exercises}
+      {partInfo.name} {partInfo.exercises}
     </li>
+  );
+};
+
+const TotalExercises = ({ courseData }) => {
+  console.log("calculating total exercises");
+  return (
+    <div>
+      total of{" "}
+      {courseData.reduce((accumulation, currentPart) => {
+        return (accumulation += currentPart.exercises);
+      }, 0)}{" "}
+      exercises
+    </div>
+  );
+};
+
+const Content = ({ courseData }) => {
+  console.log("displaying content", courseData);
+  return (
+    <div>
+      <ul>
+        {courseData.map((partInfo) => {
+          return <Part key={partInfo.id} partInfo={partInfo} />;
+        })}
+      </ul>
+      <TotalExercises courseData={courseData} />
+    </div>
   );
 };
 
 const Course = ({ course }) => {
   const headerText = course.name;
   const courseData = course.parts;
-  console.log("Courses are being rendered");
+  console.log("Header and Content are being rendered");
   return (
     <div>
       <Header headerText={headerText} />
-      <ul>
-        {courseData.map((courseInfo) => {
-          return <Content key={courseInfo.id} courseInfo={courseInfo} />;
-        })}
-      </ul>
+      <Content courseData={courseData} />
     </div>
   );
 };

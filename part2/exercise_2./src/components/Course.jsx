@@ -18,15 +18,17 @@ const Part = ({ partInfo }) => {
 
 const TotalExercises = ({ courseData }) => {
   console.log("calculating total exercises");
-  return (
-    <div>
-      total of{" "}
-      {courseData.reduce((accumulation, currentPart) => {
-        return (accumulation += currentPart.exercises);
-      }, 0)}{" "}
-      exercises
-    </div>
-  );
+  const total = courseData.reduce((accumulation, currentPart) => {
+    console.log(
+      "while colculating total exercise",
+      "\naccumulator equals to",
+      accumulation,
+      "\ncurrent part being accumulated is",
+      currentPart
+    );
+    return (accumulation += currentPart.exercises);
+  }, 0);
+  return <div>total of {total} exercises</div>;
 };
 
 const Content = ({ courseData }) => {

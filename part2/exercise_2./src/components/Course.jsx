@@ -45,16 +45,34 @@ const Content = ({ courseData }) => {
   );
 };
 
-const Course = ({ course }) => {
-  const headerText = course.name;
-  const courseData = course.parts;
+const Course = ({ headerText, courseData }) => {
   console.log("Header and Content are being rendered");
   return (
-    <div>
+    <li>
       <Header headerText={headerText} />
       <Content courseData={courseData} />
-    </div>
+    </li>
   );
 };
 
-export default Course;
+const Courses = ({ courses }) => {
+  return (
+    <ul>
+      {courses.map((currentCourseData) => {
+        const headerText = currentCourseData.name;
+        const courseData = currentCourseData.parts;
+        const courseId = currentCourseData.id;
+        console.log("Course is being rendered");
+        return (
+          <Course
+            key={courseId}
+            headerText={headerText}
+            courseData={courseData}
+          />
+        );
+      })}
+    </ul>
+  );
+};
+
+export default Courses;

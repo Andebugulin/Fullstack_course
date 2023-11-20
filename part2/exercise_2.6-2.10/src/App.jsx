@@ -8,6 +8,36 @@ const Header = ({ text }) => {
   );
 };
 
+const Filter = ({ setToFilterData, setFilter, setFilteredData, persons }) => {
+  const handleFilterChange = (event) => {
+    console.log("filter:", event.target.value);
+    const newFilter = event.target.value.toLowerCase();
+    setFilter(newFilter);
+    const filteredData = persons.filter((person) =>
+      person.name.toLowerCase().startsWith(newFilter)
+    );
+    console.log("filtered data: ", filteredData);
+    setFilteredData(filteredData);
+    if (event.target.value === "") {
+      setToFilterData(false);
+      console.log("do we need to filter data?: no");
+    } else {
+      console.log("do we need to filter data?: yes");
+      setToFilterData(true);
+    }
+  };
+  return (
+    <div>
+      <form>
+        <div>
+          filter:
+          <input onChange={handleFilterChange} />
+        </div>
+      </form>
+    </div>
+  );
+};
+
 /**
  *
  * @param {Array} persons
@@ -103,9 +133,21 @@ const App = () => {
   const [newName, setNewName] = useState("Dartanyan");
   const [newPhone, setNewPhone] = useState("+123123234345");
 
+  const [toFilterData, setToFilterData] = useState(false);
+  const [filter, setFilter] = useState("");
+  const [filteredData, setFilteredData] = useState(persons);
+
   return (
     <div>
       <Header text="Phonebook" />
+      <Filter
+        filteredData={filteredData}
+        setFilteredData={setFilteredData}
+        setFilter={setFilter}
+        persons={persons}
+        setToFilterData={setToFilterData}
+      />
+      <Header text="add a new" />
       <PhonebookForm
         persons={persons}
         setPersons={setPersons}
@@ -116,9 +158,13 @@ const App = () => {
       />
       <Header text="Numbers" />
       <ul>
-        {persons.map((person) => (
-          <NumbersRender key={person.id} person={person} />
-        ))}
+        {toFilterData
+          ? filteredData.map((person) => (
+              <NumbersRender key={person.id} person={person} />
+            ))
+          : persons.map((person) => (
+              <NumbersRender key={person.id} person={person} />
+            ))}
       </ul>
     </div>
   );

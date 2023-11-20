@@ -12,7 +12,14 @@ const Header = ({ text }) => {
  *
  * @param {Array} persons
  */
-const PhonebookForm = ({ persons, setPersons, newName, setNewName }) => {
+const PhonebookForm = ({
+  persons,
+  setPersons,
+  newName,
+  setNewName,
+  newPhone,
+  setNewPhone,
+}) => {
   const addPerson = (event) => {
     event.preventDefault();
 
@@ -30,22 +37,51 @@ const PhonebookForm = ({ persons, setPersons, newName, setNewName }) => {
     } else {
       console.log("adding a person \n name:", newName);
 
-      console.log("new person has", newName, "name", "id:", persons.length);
-      setPersons([...persons, { id: persons.length, name: newName }]);
+      console.log(
+        "new person has",
+        newName,
+        "name",
+        "phone:",
+        newPhone,
+        "id:",
+        persons.length
+      );
+      setPersons([
+        ...persons,
+        { id: persons.length, name: newName, phone: newPhone },
+      ]);
       setNewName("");
+      setNewPhone("");
     }
   };
 
   const handlePersonChange = (event) => {
-    console.log("typing into a person form, \nsomething:", event.target.value);
+    console.log(
+      "typing into a person change name form, \nsomething:",
+      event.target.value
+    );
     setNewName(event.target.value);
+  };
+
+  const handlePhoneChange = (event) => {
+    console.log(
+      "typing into a person phone form, \nsomething:",
+      event.target.value
+    );
+    setNewPhone(event.target.value);
   };
 
   return (
     <div>
       <form onSubmit={addPerson}>
-        name:
-        <input value={newName} onChange={handlePersonChange} />
+        <div>
+          name:
+          <input value={newName} onChange={handlePersonChange} />
+        </div>
+        <div>
+          phone:
+          <input value={newPhone} onChange={handlePhoneChange} />
+        </div>
         <button type="submit">add</button>
       </form>
     </div>
@@ -53,12 +89,19 @@ const PhonebookForm = ({ persons, setPersons, newName, setNewName }) => {
 };
 
 const NumbersRender = ({ person }) => {
-  return <li>{person.name}</li>;
+  return (
+    <li>
+      {person.name} {person.phone}
+    </li>
+  );
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([{ id: 0, name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { id: 0, name: "Arto Hellas", phone: "+123345456567" },
+  ]);
   const [newName, setNewName] = useState("Dartanyan");
+  const [newPhone, setNewPhone] = useState("+123123234345");
 
   return (
     <div>
@@ -68,6 +111,8 @@ const App = () => {
         setPersons={setPersons}
         newName={newName}
         setNewName={setNewName}
+        newPhone={newPhone}
+        setNewPhone={setNewPhone}
       />
       <Header text="Numbers" />
       <ul>

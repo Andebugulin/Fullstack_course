@@ -130,6 +130,7 @@ const App = () => {
   const [persons, setPersons] = useState([
     { id: 0, name: "Arto Hellas", phone: "+123345456567" },
   ]);
+
   const [newName, setNewName] = useState("Dartanyan");
   const [newPhone, setNewPhone] = useState("+123123234345");
 

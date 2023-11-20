@@ -8,14 +8,32 @@ const Header = ({ text }) => {
   );
 };
 
+/**
+ *
+ * @param {Array} persons
+ */
 const PhonebookForm = ({ persons, setPersons, newName, setNewName }) => {
   const addPerson = (event) => {
     event.preventDefault();
-    console.log("adding a person \n name:", newName);
 
-    console.log("new person has", newName, "name", "id:", persons.length);
-    setPersons([...persons, { id: persons.length, name: newName }]);
-    setNewName("");
+    const nameExists = persons.some((person) => person.name === newName);
+    if (nameExists | (newName === "")) {
+      alert(
+        "Name:" +
+          newName +
+          "already exists or empty! Please use a different name."
+      );
+      console.log(
+        "Name: ${newName} already exists! Please use a different name."
+      );
+      return;
+    } else {
+      console.log("adding a person \n name:", newName);
+
+      console.log("new person has", newName, "name", "id:", persons.length);
+      setPersons([...persons, { id: persons.length, name: newName }]);
+      setNewName("");
+    }
   };
 
   const handlePersonChange = (event) => {

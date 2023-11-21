@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Header = ({ text }) => {
   return (
@@ -74,11 +75,11 @@ const PhonebookForm = ({
         "phone:",
         newPhone,
         "id:",
-        persons.length
+        persons.length + 1
       );
       setPersons([
         ...persons,
-        { id: persons.length, name: newName, phone: newPhone },
+        { id: persons.length + 1, name: newName, phone: newPhone },
       ]);
       setNewName("");
       setNewPhone("");
@@ -137,6 +138,18 @@ const App = () => {
   const [toFilterData, setToFilterData] = useState(false);
   const [filter, setFilter] = useState("");
   const [filteredData, setFilteredData] = useState(persons);
+
+  useEffect(() => {
+    console.log("effect");
+
+    const eventHandler = (response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    };
+
+    const promise = axios.get("http://localhost:3001/persons");
+    promise.then(eventHandler);
+  }, []);
 
   return (
     <div>

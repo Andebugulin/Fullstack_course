@@ -50,6 +50,7 @@ const PhonebookForm = ({
   setNewName,
   newPhone,
   setNewPhone,
+  url_persons,
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
@@ -77,12 +78,15 @@ const PhonebookForm = ({
         "id:",
         persons.length + 1
       );
-      const newObject = {
-        id: persons.length + 1,
+      const newPerson = {
         name: newName,
-        phone: newPhone,
+        number: newPhone,
       };
-      setPersons([...persons, newObject]);
+
+      axios.post(url_persons, newPerson).then((response) => {
+        setPersons([...persons, response.data]);
+      });
+
       setNewName("");
       setNewPhone("");
     }
@@ -130,9 +134,7 @@ const NumbersRender = ({ person }) => {
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { id: 0, name: "Arto Hellas", number: "+123345456567" },
-  ]);
+  const [persons, setPersons] = useState([]);
 
   const [newName, setNewName] = useState("Dartanyan");
   const [newPhone, setNewPhone] = useState("+123123234345");
@@ -141,10 +143,12 @@ const App = () => {
   const [filter, setFilter] = useState("");
   const [filteredData, setFilteredData] = useState(persons);
 
+  const url_persons = "http://localhost:3001/persons";
+
   useEffect(() => {
     console.log("effect");
 
-    axios.get("http://localhost:3001/persons").then((response) => {
+    axios.get(url_persons).then((response) => {
       console.log("promise fulfilled");
       setPersons(response.data);
       setFilteredData(response.data);
@@ -170,6 +174,7 @@ const App = () => {
         setNewName={setNewName}
         newPhone={newPhone}
         setNewPhone={setNewPhone}
+        url_persons={url_persons}
       />
       <Header text="Numbers" />
       <ul>

@@ -77,10 +77,12 @@ const PhonebookForm = ({
         "id:",
         persons.length + 1
       );
-      setPersons([
-        ...persons,
-        { id: persons.length + 1, name: newName, phone: newPhone },
-      ]);
+      const newObject = {
+        id: persons.length + 1,
+        name: newName,
+        phone: newPhone,
+      };
+      setPersons([...persons, newObject]);
       setNewName("");
       setNewPhone("");
     }
@@ -122,14 +124,14 @@ const PhonebookForm = ({
 const NumbersRender = ({ person }) => {
   return (
     <li>
-      {person.name} {person.phone}
+      {person.name} {person.number}
     </li>
   );
 };
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { id: 0, name: "Arto Hellas", phone: "+123345456567" },
+    { id: 0, name: "Arto Hellas", number: "+123345456567" },
   ]);
 
   const [newName, setNewName] = useState("Dartanyan");
@@ -142,13 +144,12 @@ const App = () => {
   useEffect(() => {
     console.log("effect");
 
-    const eventHandler = (response) => {
+    axios.get("http://localhost:3001/persons").then((response) => {
       console.log("promise fulfilled");
       setPersons(response.data);
-    };
-
-    const promise = axios.get("http://localhost:3001/persons");
-    promise.then(eventHandler);
+      setFilteredData(response.data);
+      console.log(response.data);
+    });
   }, []);
 
   return (

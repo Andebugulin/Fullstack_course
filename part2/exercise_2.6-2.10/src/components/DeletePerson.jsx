@@ -1,9 +1,16 @@
 import personServices from "../services/persons";
 
-const DeleteButton = ({ text, callToDo }) => {
+const DeleteButton = ({ text, onConfirm }) => {
+  const handleDelete = () => {
+    const confirmed = window.confirm("Are you sure you want to delete?");
+    if (confirmed) {
+      onConfirm();
+    }
+  };
+
   return (
     <div>
-      <button onClick={callToDo}>{text}</button>
+      <button onClick={handleDelete}>{text}</button>
     </div>
   );
 };
@@ -25,7 +32,7 @@ const DeletePerson = ({ person, persons, setPersons }) => {
 
   return (
     <div>
-      <DeleteButton text="delete" callToDo={deletingPerson} />
+      <DeleteButton text="delete" onConfirm={deletingPerson} />
     </div>
   );
 };

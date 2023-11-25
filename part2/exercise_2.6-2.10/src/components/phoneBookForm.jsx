@@ -9,13 +9,66 @@ const PhonebookForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("Dartanyan");
   const [newPhone, setNewPhone] = useState("+123123234345");
 
+  const updatingPhone = () => {
+    const oldPerson = persons.find((person) => person.name === newName);
+    const newPerson = {
+      ...oldPerson,
+      number: newPhone,
+    };
+    console.log("new phone:", newPhone, "oldPerson:", oldPerson);
+    personServices
+      .update(oldPerson.id, newPerson)
+      .then((updatedPerson) => {
+        console.log(
+          "updating person, \n oldPerson:",
+          oldPerson,
+          "\n newPerson",
+          updatedPerson
+        );
+        setPersons(
+          persons.map((person) =>
+            person.id === oldPerson.id ? updatedPerson : person
+          )
+        );
+      })
+      .catch((error) => {
+        alert(`the person was already deleted from server`);
+        setPersons(persons.filter((person) => person.id !== oldPerson.id));
+      });
+  };
+
+  const handleConfirmation = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to update" +
+        newName +
+        " with new phone:" +
+        newPhone +
+        "?"
+    );
+    if (confirmed) {
+      updatingPhone();
+    }
+  };
+
   const addPerson = (event) => {
     event.preventDefault();
+
     const nameExists = persons.some((person) => person.name === newName);
-    if (nameExists | (newName === "")) {
-      alert("Name: " + newName + "  ! Please use a different name !");
-      console.log("Name:", newName, "! Please use a different name !");
+    if (newName === "") {
+      alert(
+        "Name: " +
+          newName +
+          "  ! Please, use a different name, your current name is empty !"
+      );
+      console.log(
+        "Name:",
+        newName,
+        "! Please, use a different name, your current name is empty !"
+      );
       return;
+    }
+    if (nameExists) {
+      handleConfirmation();
     } else {
       const newPerson = {
         name: newName,

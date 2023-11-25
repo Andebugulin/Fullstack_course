@@ -11,9 +11,17 @@ const create = (newObject) => {
   return request.then((response) => response.data);
 };
 
+const deleteOne = (deleteObjectId) => {
+  const request = axios.delete(baseUrl + "/" + deleteObjectId);
+  return request.catch((error) => {
+    console.error("Error deleting object:", error);
+    throw error; // Re-throw the error to propagate it further
+  });
+};
+
 const update = (id, newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject);
   return request.then((response) => response.data);
 };
 
-export default { getAll, create, update };
+export default { getAll, create, update, deleteOne };

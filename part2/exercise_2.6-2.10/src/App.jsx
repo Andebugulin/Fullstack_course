@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import personServices from "./services/persons";
 import PhonebookForm from "./components/phoneBookForm";
 import Filter from "./components/Filter";
+import DeletePerson from "./components/DeletePerson";
 
 const Header = ({ text }) => {
   return (
@@ -11,10 +12,16 @@ const Header = ({ text }) => {
   );
 };
 
-const NumbersRender = ({ person }) => {
+const NumbersRender = ({ person, setPersons, persons }) => {
   return (
     <li>
-      {person.name} {person.number}
+      {person.name} {person.number}{" "}
+      <DeletePerson
+        person={person}
+        setPersons={setPersons}
+        text={"delete"}
+        persons={persons}
+      />
     </li>
   );
 };
@@ -44,7 +51,12 @@ const App = () => {
         {persons
           .filter((person) => person.name.toLowerCase().startsWith(filter))
           .map((person) => (
-            <NumbersRender key={person.id} person={person} />
+            <NumbersRender
+              key={person.id}
+              person={person}
+              persons={persons}
+              setPersons={setPersons}
+            />
           ))}
       </ul>
     </div>

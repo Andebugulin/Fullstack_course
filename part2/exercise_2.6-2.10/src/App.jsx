@@ -3,6 +3,7 @@ import personServices from "./services/persons";
 import PhonebookForm from "./components/phoneBookForm";
 import Filter from "./components/Filter";
 import DeletePerson from "./components/DeletePerson";
+import Notification from "./components/Notification";
 
 const Header = ({ text }) => {
   return (
@@ -12,7 +13,7 @@ const Header = ({ text }) => {
   );
 };
 
-const NumbersRender = ({ person, setPersons, persons }) => {
+const NumbersRender = ({ person, setPersons, persons, setNotification }) => {
   return (
     <li>
       {person.name} {person.number}{" "}
@@ -21,6 +22,7 @@ const NumbersRender = ({ person, setPersons, persons }) => {
         setPersons={setPersons}
         text={"delete"}
         persons={persons}
+        setNotification={setNotification}
       />
     </li>
   );
@@ -29,6 +31,7 @@ const NumbersRender = ({ person, setPersons, persons }) => {
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState("");
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     console.log("effect");
@@ -42,10 +45,15 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification} />
       <Header text="Phonebook" />
       <Filter setFilter={setFilter} />
       <Header text="add a new" />
-      <PhonebookForm persons={persons} setPersons={setPersons} />
+      <PhonebookForm
+        persons={persons}
+        setPersons={setPersons}
+        setNotification={setNotification}
+      />
       <Header text="Numbers" />
       <ul>
         {persons
@@ -56,6 +64,7 @@ const App = () => {
               person={person}
               persons={persons}
               setPersons={setPersons}
+              setNotification={setNotification}
             />
           ))}
       </ul>

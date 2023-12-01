@@ -5,7 +5,7 @@ import { useState } from "react";
  * @param {String} newName
  * @param {String} newPhone
  */
-const PhonebookForm = ({ persons, setPersons }) => {
+const PhonebookForm = ({ persons, setPersons, setNotification }) => {
   const [newName, setNewName] = useState("Dartanyan");
   const [newPhone, setNewPhone] = useState("+123123234345");
 
@@ -30,9 +30,20 @@ const PhonebookForm = ({ persons, setPersons }) => {
             person.id === oldPerson.id ? updatedPerson : person
           )
         );
+        setNotification(
+          `person: '${oldPerson.name}' successfully changed information about them`
+        );
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
       })
       .catch((error) => {
-        alert(`the person was already deleted from server`);
+        setNotification(
+          `error: person: '${oldPerson}' was already been removed from the server`
+        );
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
         setPersons(persons.filter((person) => person.id !== oldPerson.id));
       });
   };
@@ -81,6 +92,10 @@ const PhonebookForm = ({ persons, setPersons }) => {
         setPersons([...persons, returnedPerson]);
         setNewName("");
         setNewPhone("");
+        setNotification(`addition of '${returnedPerson.name}' was successful`);
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
       });
     }
   };

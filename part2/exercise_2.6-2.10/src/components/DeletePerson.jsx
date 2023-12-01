@@ -32,7 +32,16 @@ const DeletePerson = ({ person, persons, setPersons, setNotification }) => {
           setNotification(null);
         }, 5000);
       })
-      .catch((error) => console.error("Error deleting person:", error));
+      .catch((error) => {
+        const oldPerson = person;
+        setNotification(
+          `error: person: '${person}' was already been removed from the server`
+        );
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
+        setPersons(persons.filter((person) => person.id !== oldPerson.id));
+      });
   };
 
   return (
